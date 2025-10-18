@@ -47,7 +47,7 @@ pip install pynput
 
 Then open the boghack file by writing:
 ```shell
-cd boghack19
+cd keylogger
 dir
 ```
 You will see all of the files and the keylogger.
@@ -58,7 +58,7 @@ python keylogger.py
 !!KEYLOGGER WILL WORK ONLY IF THE CMD TERMINAL IS OPENED OR HIDEN IN SECOND DESKTOP!!
 To check the file:
 ```shell
-cd boghack19
+cd keylogger
 dir
 ```
 Copy the name of the file and write:
@@ -71,5 +71,5 @@ del the file name
 ```
 To delete my keylogger:
 ```shell
-rmdir /s /q "boghack19"
+rmdir /s /q "keylogger"
 ```
