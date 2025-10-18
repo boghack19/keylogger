@@ -1,4 +1,4 @@
-# *Installing Keystroke Analyticsr in windows cmd*
+# *Installing Keystroke Analytics in windows cmd*
 
 ### !!⚠️ ⚠️ ⚠️ SECURITY & LEGAL WARNING - FOR AUTHORIZED RESEARCH & EDUCATIONAL USE ONLY ⚠️ ⚠️ ⚠️
 
